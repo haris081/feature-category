@@ -3,1357 +3,414 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InsureScope | Insurance Feature Explorer</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Birthday Surprise!</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         
-        :root {
-            --primary: #4361ee;
-            --primary-light: #4895ef;
-            --primary-dark: #3a0ca3;
-            --secondary: #7209b7;
-            --accent: #f72585;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --gray: #6c757d;
-            --gray-light: #e9ecef;
-            --success: #4cc9f0;
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
-            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
-            --shadow-xl: 0 20px 40px rgba(0,0,0,0.15);
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-        
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f5f7ff 0%, #f0f2ff 50%, #e6e9ff 100%);
-            color: var(--dark);
-            line-height: 1.6;
-            min-height: 100vh;
-            overflow-x: hidden;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1600px;
-            margin: 0 auto;
-            border-radius: 24px;
+            background-color: #000;
+            color: #fff;
+            font-family: 'Courier New', monospace;
             overflow: hidden;
-            box-shadow: var(--shadow-xl);
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.9);
-            position: relative;
+            height: 100vh;
+            width: 100vw;
         }
         
-        /* Background decorative elements */
-        .bg-blur-circle {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            filter: blur(60px);
-            opacity: 0.3;
-            z-index: -1;
-        }
-        
-        .circle-1 {
-            background: var(--primary-light);
-            top: -100px;
-            right: -100px;
-        }
-        
-        .circle-2 {
-            background: var(--accent);
-            bottom: -100px;
-            left: -100px;
-        }
-        
-        /* Header */
-        header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 40px 50px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        header::before {
-            content: '';
-            position: absolute;
+        /* Sci-Fi Terminal Effect */
+        .terminal {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
-            opacity: 0.1;
-        }
-        
-        .header-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-        
-        .logo-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .logo-text {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            font-size: 32px;
-            letter-spacing: -0.5px;
-        }
-        
-        .tagline {
-            font-size: 18px;
-            opacity: 0.9;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-        
-        .header-stats {
-            display: flex;
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        .stat-card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 20px;
-            min-width: 150px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: var(--transition);
-        }
-        
-        .stat-card:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-5px);
-        }
-        
-        .stat-value {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-        
-        .stat-label {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-        
-        /* Main content */
-        .main-content {
-            display: flex;
-            min-height: 700px;
-            position: relative;
-        }
-        
-        /* Categories Panel */
-        .categories-panel {
-            width: 28%;
-            background: white;
-            padding: 30px;
-            border-right: 1px solid var(--gray-light);
-            position: relative;
-            z-index: 2;
-        }
-        
-        .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--primary);
-        }
-        
-        .panel-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .panel-count {
-            background: var(--primary);
-            color: white;
-            font-size: 14px;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-        
-        .search-box {
-            margin-bottom: 25px;
-            position: relative;
-        }
-        
-        .search-box input {
-            width: 100%;
-            padding: 14px 20px 14px 45px;
-            border: 1px solid var(--gray-light);
-            border-radius: 12px;
-            font-family: 'Inter', sans-serif;
-            font-size: 15px;
-            transition: var(--transition);
-            background: white;
-        }
-        
-        .search-box input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
-        }
-        
-        .search-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray);
-            font-size: 18px;
-        }
-        
-        .category-list {
-            list-style: none;
-            max-height: 500px;
-            overflow-y: auto;
-            padding-right: 10px;
-        }
-        
-        .category-list::-webkit-scrollbar {
-            width: 6px;
-        }
-        
-        .category-list::-webkit-scrollbar-track {
-            background: var(--gray-light);
-            border-radius: 10px;
-        }
-        
-        .category-list::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 10px;
-        }
-        
-        .category-item {
-            padding: 18px 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: var(--transition);
-            margin-bottom: 10px;
-            border: 1px solid transparent;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .category-item:hover {
-            background: rgba(67, 97, 238, 0.05);
-            border-color: rgba(67, 97, 238, 0.2);
-            transform: translateX(5px);
-        }
-        
-        .category-item.active {
-            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(114, 9, 183, 0.1) 100%);
-            border-color: var(--primary);
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .category-name {
-            font-weight: 600;
-            color: var(--dark);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .category-icon {
-            width: 36px;
-            height: 36px;
-            background: var(--primary-light);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 16px;
-        }
-        
-        .category-count {
-            background: var(--gray-light);
-            color: var(--dark);
-            font-size: 13px;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-weight: 600;
-            min-width: 36px;
-            text-align: center;
-        }
-        
-        .category-item.active .category-count {
-            background: var(--primary);
-            color: white;
-        }
-        
-        /* Brands Panel */
-        .brands-panel {
-            width: 32%;
-            background: white;
-            border-right: 1px solid var(--gray-light);
-            padding: 30px;
-            display: none;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .brands-panel.visible {
-            display: block;
-            animation: slideInLeft 0.4s ease;
-        }
-        
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        
-        .selected-category-badge {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-        
-        .brand-list {
-            list-style: none;
-        }
-        
-        .brand-item {
-            padding: 18px 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: var(--transition);
-            margin-bottom: 12px;
-            border: 1px solid transparent;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: white;
-        }
-        
-        .brand-item:hover {
-            background: rgba(67, 97, 238, 0.05);
-            border-color: rgba(67, 97, 238, 0.2);
-            transform: translateX(5px);
-        }
-        
-        .brand-item.active {
-            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(114, 9, 183, 0.1) 100%);
-            border-color: var(--primary);
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .brand-name {
-            font-weight: 600;
-            color: var(--dark);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .brand-logo {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--primary-light) 0%, var(--success) 100%);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 18px;
-            font-weight: 700;
-        }
-        
-        .brand-feature-count {
-            background: var(--gray-light);
-            color: var(--dark);
-            font-size: 13px;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-weight: 600;
-            min-width: 36px;
-            text-align: center;
-        }
-        
-        .brand-item.active .brand-feature-count {
-            background: var(--primary);
-            color: white;
-        }
-        
-        /* Details Panel */
-        .details-panel {
-            width: 40%;
-            padding: 30px;
-            background: white;
-            display: none;
-        }
-        
-        .details-panel.visible {
-            display: block;
-            animation: slideInRight 0.4s ease;
-        }
-        
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        
-        .empty-state {
-            text-align: center;
-            padding: 80px 30px;
-            color: var(--gray);
-        }
-        
-        .empty-icon {
-            font-size: 80px;
-            margin-bottom: 25px;
-            color: var(--gray-light);
-            opacity: 0.7;
-        }
-        
-        .empty-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: var(--dark);
-        }
-        
-        .empty-desc {
-            max-width: 400px;
-            margin: 0 auto 30px;
-            font-size: 16px;
-        }
-        
-        .navigation-steps {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        .step {
+            background: rgba(0, 20, 0, 0.95);
+            z-index: 1000;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            max-width: 120px;
-        }
-        
-        .step-number {
-            width: 50px;
-            height: 50px;
-            background: var(--primary-light);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            font-weight: 700;
-            font-size: 20px;
-            margin-bottom: 5px;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
         }
         
-        .step-text {
-            font-size: 14px;
+        .terminal-content {
+            max-width: 800px;
+            width: 100%;
             text-align: center;
-            font-weight: 500;
         }
         
-        /* Feature Details */
-        .feature-details {
-            animation: fadeIn 0.5s ease;
+        .terminal-line {
+            font-size: 1.8rem;
+            color: #0f0;
+            text-shadow: 0 0 10px #0f0;
+            margin: 20px 0;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: typeWriter 3s forwards;
+        }
+        
+        .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #0f0, transparent);
+            animation: scan 3s linear infinite;
+        }
+        
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* Birthday Message Section */
+        .birthday-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #1a1a2e 0%, #16213e 70%, #0f0c29 100%);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .birthday-content {
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        .birthday-title {
+            font-size: 4.5rem;
+            background: linear-gradient(45deg, #ff0080, #00dbde, #ff0080);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 30px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        .name-display {
+            font-size: 5rem;
+            color: #ffcc00;
+            text-shadow: 0 0 30px #ffcc00;
+            margin: 40px 0;
+            animation: pulse 1.5s ease-in-out infinite;
+            font-family: 'Arial Black', sans-serif;
+            letter-spacing: 2px;
+        }
+        
+        .birthday-text {
+            font-size: 2.2rem;
+            color: #fff;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            background-color: #f00;
+            opacity: 0;
+            z-index: 1001;
+        }
+        
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+        
+        /* Animations */
+        @keyframes typeWriter {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes scan {
+            0% {
+                top: 0%;
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                top: 100%;
+                opacity: 0;
+            }
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 20px #ff0080, 0 0 30px #ff0080, 0 0 40px #ff0080;
+            }
+            to {
+                text-shadow: 0 0 20px #00dbde, 0 0 30px #00dbde, 0 0 40px #00dbde;
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                text-shadow: 0 0 30px #ffcc00;
+            }
+            50% {
+                transform: scale(1.05);
+                text-shadow: 0 0 50px #ffcc00, 0 0 70px #ffcc00;
+            }
+        }
+        
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .feature-header {
-            background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
-            padding: 25px;
-            border-radius: 16px;
-            margin-bottom: 30px;
-            border-left: 6px solid var(--primary);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .feature-category-badge {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-        
-        .feature-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: var(--dark);
-            line-height: 1.3;
-        }
-        
-        .feature-brand {
-            font-size: 18px;
-            color: var(--primary);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .description-box {
-            background: white;
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--gray-light);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .description-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 5px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--primary), var(--secondary));
-        }
-        
-        .description-text {
-            font-size: 16px;
-            line-height: 1.7;
-            color: var(--dark);
-            white-space: pre-line;
-        }
-        
-        .description-stats {
-            display: flex;
-            gap: 20px;
-            margin-top: 25px;
-            padding-top: 25px;
-            border-top: 1px solid var(--gray-light);
-        }
-        
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .stat-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(67, 97, 238, 0.1);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-size: 18px;
-        }
-        
-        /* Responsive */
-        @media (max-width: 1200px) {
-            .main-content {
-                flex-direction: column;
+            from {
+                opacity: 0;
             }
-            
-            .categories-panel, .brands-panel, .details-panel {
-                width: 100%;
-                border-right: none;
-                border-bottom: 1px solid var(--gray-light);
-            }
-            
-            .brands-panel, .details-panel {
-                min-height: 400px;
-            }
-            
-            .header-stats {
-                flex-wrap: wrap;
-                gap: 20px;
-            }
-            
-            .stat-card {
-                min-width: 120px;
+            to {
+                opacity: 1;
             }
         }
         
         @media (max-width: 768px) {
-            header {
-                padding: 30px 25px;
+            .terminal-line {
+                font-size: 1.4rem;
             }
             
-            .logo-text {
-                font-size: 24px;
+            .birthday-title {
+                font-size: 3rem;
             }
             
-            .tagline {
-                font-size: 16px;
+            .name-display {
+                font-size: 3.5rem;
             }
             
-            .categories-panel, .brands-panel, .details-panel {
-                padding: 25px;
+            .birthday-text {
+                font-size: 1.8rem;
             }
-            
-            .feature-title {
-                font-size: 24px;
-            }
-            
-            .navigation-steps {
-                flex-direction: column;
-                align-items: center;
-                gap: 20px;
-            }
-        }
-        
-        /* Additional decorative elements */
-        .floating-shape {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.1;
-            z-index: 1;
-        }
-        
-        .shape-1 {
-            width: 100px;
-            height: 100px;
-            background: var(--primary);
-            top: 20%;
-            right: 10%;
-        }
-        
-        .shape-2 {
-            width: 150px;
-            height: 150px;
-            background: var(--accent);
-            bottom: 15%;
-            left: 5%;
         }
     </style>
 </head>
 <body>
-    <div class="bg-blur-circle circle-1"></div>
-    <div class="bg-blur-circle circle-2"></div>
-    
-    <div class="floating-shape shape-1"></div>
-    <div class="floating-shape shape-2"></div>
-    
-    <div class="container">
-        <header>
-            <div class="header-content">
-                <div class="logo">
-                    <div class="logo-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <div class="logo-text">InsureScope</div>
-                </div>
-                <div class="tagline">
-                    Explore, compare, and understand insurance features across top providers. 
-                    Make informed decisions with our comprehensive feature comparison tool.
-                </div>
-                
-                <div class="header-stats">
-                    <div class="stat-card">
-                        <div class="stat-value" id="totalFeatures">0</div>
-                        <div class="stat-label">Total Features</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="totalBrands">0</div>
-                        <div class="stat-label">Insurance Providers</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="totalCategories">0</div>
-                        <div class="stat-label">Feature Categories</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="coverageValue">₹5Cr+</div>
-                        <div class="stat-label">Total Coverage</div>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <div class="main-content">
-            <!-- Left Panel: Feature Categories -->
-            <div class="categories-panel">
-                <div class="panel-header">
-                    <div class="panel-title">
-                        <i class="fas fa-filter"></i>
-                        Feature Categories
-                        <span class="panel-count" id="categoryCount">0</span>
-                    </div>
-                </div>
-                
-                <div class="search-box">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" id="categorySearch" placeholder="Search categories...">
-                </div>
-                
-                <ul class="category-list" id="categoryList">
-                    <!-- Categories will be inserted here by JavaScript -->
-                </ul>
-            </div>
-
-            <!-- Middle Panel: Brands/Plans -->
-            <div class="brands-panel" id="brandsPanel">
-                <div class="panel-header">
-                    <div class="panel-title">
-                        <i class="fas fa-building"></i>
-                        Insurance Plans
-                        <div class="selected-category-badge" id="selectedCategoryBadge">
-                            <i class="fas fa-tag"></i>
-                            <span id="selectedCategoryName">Category</span>
-                        </div>
-                    </div>
-                    <div class="panel-count" id="brandCount">0 plans</div>
-                </div>
-                
-                <ul class="brand-list" id="brandList">
-                    <!-- Brands/Plans will be inserted here by JavaScript -->
-                </ul>
-            </div>
-
-            <!-- Right Panel: Feature Details -->
-            <div class="details-panel" id="detailsPanel">
-                <div class="empty-state" id="emptyDetails">
-                    <div class="empty-icon">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <div class="empty-title">Select a Feature to Explore</div>
-                    <div class="empty-desc">
-                        Browse through our comprehensive database of insurance features. 
-                        Select a category from the left panel, then choose a specific plan to view detailed information.
-                    </div>
-                    
-                    <div class="navigation-steps">
-                        <div class="step">
-                            <div class="step-number">1</div>
-                            <div class="step-text">Select a feature category</div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">2</div>
-                            <div class="step-text">Choose an insurance plan</div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">3</div>
-                            <div class="step-text">View detailed information</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="detailsContent" class="feature-details" style="display: none;">
-                    <div class="feature-header">
-                        <div class="feature-category-badge" id="detailCategoryTag">Category</div>
-                        <h1 class="feature-title" id="detailFeatureName">Feature Name</h1>
-                        <div class="feature-brand">
-                            <i class="fas fa-building"></i>
-                            <span id="detailBrandName">Brand / Plan Name</span>
-                        </div>
-                    </div>
-                    
-                    <div class="description-box">
-                        <div class="description-text" id="detailDescription">
-                            Description will appear here.
-                        </div>
-                        
-                        <div class="description-stats">
-                            <div class="stat-item">
-                                <div class="stat-icon">
-                                    <i class="fas fa-check-circle"></i>
-                                </div>
-                                <div>
-                                    <div style="font-weight: 600; color: var(--dark);">Coverage Type</div>
-                                    <div style="font-size: 14px; color: var(--gray);" id="coverageType">Accidental</div>
-                                </div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-icon">
-                                    <i class="fas fa-rupee-sign"></i>
-                                </div>
-                                <div>
-                                    <div style="font-weight: 600; color: var(--dark);">Benefit Range</div>
-                                    <div style="font-size: 14px; color: var(--gray);" id="benefitRange">₹5,000 - ₹15L</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Sci-Fi Terminal Section -->
+    <div class="terminal" id="terminal">
+        <div class="scan-line"></div>
+        <div class="terminal-content">
+            <div class="terminal-line" style="animation-delay: 0.5s">INITIATING SYSTEM SCAN...</div>
+            <div class="terminal-line" style="animation-delay: 1.5s">ACCESSING BIRTHDAY PROTOCOL...</div>
+            <div class="terminal-line" style="animation-delay: 2.5s">DECRYPTING MESSAGE...</div>
+            <div class="terminal-line" style="animation-delay: 3.5s">IDENTITY CONFIRMED...</div>
+            <div class="terminal-line" style="animation-delay: 4.5s">PREPARING SURPRISE...</div>
+            <div class="terminal-line" style="animation-delay: 5.5s">ACTIVATION IN 3...</div>
+            <div class="terminal-line" style="animation-delay: 6s">2...</div>
+            <div class="terminal-line" style="animation-delay: 6.5s">1...</div>
         </div>
     </div>
+    
+    <!-- Birthday Message Section -->
+    <div class="birthday-message" id="birthdayMessage">
+        <div class="stars" id="stars"></div>
+        <div class="birthday-content">
+            <h1 class="birthday-title">🎂 HAPPY BIRTHDAY! 🎉</h1>
+            <div class="name-display">XYZ</div>
+            <p class="birthday-text">
+                May your day be filled with cosmic joy,<br>
+                interstellar adventures, and<br>
+                memories that shine brighter than the stars!<br>
+                🚀✨🎁
+            </p>
+            <p class="birthday-text" style="font-size: 1.5rem; color: #00dbde;">
+                Scan complete. Birthday surprise delivered successfully!
+            </p>
+        </div>
+    </div>
+    
+    <!-- Matrix Rain Canvas -->
+    <canvas class="matrix-rain" id="matrixCanvas"></canvas>
 
     <script>
-        // Raw CSV data as a string (simulating the file content)
-        const csvData = `feature_category__name,name,description
-Reliance fifteen,Terrorism Covered,"Terrorism covered, along with last rites benefit of ₹5,000."
-Reliance fifteen,Education Grant,"Up to ₹1,00,000 for up to two dependent children below 21 years."
-Reliance fifteen,Permanent Partial Disability,"Benefit as per % chart for partial losses (fingers, hearing, limbs, etc.)"
-Reliance fifteen,Permanent Total Disability,"cover up to ₹15,00,000 for major permanent injuries."
-Reliance fifteen,Accidental Death,"Cover up to ₹15,00,000 payable to nominee on accidental death."
-Reliance ten lakhs,Coverage For Terrorism And Funeral,"Coverage for terrorism incidents + funeral expenses up to ₹5,000."
-Reliance ten lakhs,Education Grant,"Up to ₹1,00,000 (10% of SI) for up to two children under 21."
-Reliance ten lakhs,Permanent Partial Disability,Payout based on injury percentage as per policy table.
-Reliance ten lakhs,Permanent Total Disability,"Cover up to ₹10,00,000 for loss of limbs/eyes or inability to work."
-Reliance ten lakhs,Accidental Death,"Cover up to ₹10,00,000 for accidental death within 12 months."
-Reliance five,Last Rites Expenses,"Up to ₹5,000, plus terrorism cover included."
-Reliance five,Education Grant,"Up to ₹50,000 (10% of SI) for up to two dependent children under 21."
-Reliance five,Permanent Partial Disability,"Benefit as per % disability schedule (fingers, toes, hearing, etc.)."
-Reliance five,Permanent Total Disability,"cover up to ₹5,00,000 for complete and permanent loss of ability."
-Reliance five,Accidental Death,"cover up to ₹5,00,000 for death within 12 months of the accident."
-Tata ten lakhs,Discount From Network Providers,"Discounts on diagnostics (10%), medicine delivery (up to 15%), and health checkups (40%)."
-Tata ten lakhs,Teleconsultation General,Unlimited teleconsultations via Tata AIG app.
-Tata ten lakhs,Terrorism,"Coverage up to ₹10,00,000 for accidental injury or death due to terrorism."
-Tata ten lakhs,Funeral Benefits,"Coverage up to ₹5,000 for funeral expenses due to accidental death.
-In-Hospital Daily Cash: Coverage of ₹1,000 per day up to 10 days for hospital stay due to accident."
-Tata ten lakhs,Repatriation Of Remains,"Coverage up to ₹5,000 for transportation of mortal remains after accidental death."
-Tata ten lakhs,Family Transportation Benefit,"Coverage up to ₹30,000 for transporting a family member when insured is hospitalized far from home."
-Tata ten lakhs,Evacuation Benefit,"Coverage up to ₹5,000 for emergency evacuation due to accidental injury."
-Tata ten lakhs,Education Benefit,"Coverage up to ₹1,00,000 for children's education in case of accidental death."
-Tata ten lakhs,Common Disaster Benefit,"Coverage up to ₹50,000 if spouse also passes away in the same accident."
-Tata ten lakhs,Coma,"Coverage up to ₹1,00,000 if the insured enters coma due to an accident."
-Tata ten lakhs,Ambulance Services,"Coverage up to ₹1,000 for ambulance expenses due to accident."
-Tata ten lakhs,Accidental Medical Expenses,"Coverage up to ₹1,00,000 for inpatient medical expenses due to an accident."
-Tata ten lakhs,Accidental Dismemberment Paralysis,"Coverage up to ₹10,00,000 for accidental dismemberment or paralysis."
-Tata ten lakhs,Permanent Partial Disability,"Coverage up to ₹10,00,000 for permanent partial disability due to accident."
-Tata ten lakhs,Permanent Total Disability,"Coverage up to ₹10,00,000 for permanent total disability due to accident."
-Tata ten lakhs,Accidental Death,"Coverage up to ₹10,00,000 for death due to an accident."
-Tata five lakhs,Terrorism,"Coverage up to ₹5,00,000 for accidental injury or death due to terrorism."
-Tata five lakhs,Teleconsultation General,Unlimited teleconsultations through Tata AIG app.
-Tata five lakhs,Repatriation Of Remains,"Coverage up to ₹5,000 for transporting mortal remains after accidental death."
-Tata five lakhs,Redeemable Voucher,Discount on Services: Discount vouchers available through Tata AIG app.
-Tata five lakhs,Permanent Total Disability,"Coverage up to ₹5,00,000 for permanent total disability due to accident."
-Tata five lakhs,Permanent Partial Disability,"Coverage up to ₹5,00,000 for permanent partial disability due to accident."
-Tata five lakhs,Funeral Benefits,"Coverage up to ₹5,000 for funeral expenses in case of accidental death."
-Tata five lakhs,Fixed Medex IPD SI,"Coverage up to ₹50,000 for inpatient medical expenses due to an accident."
-Tata five lakhs,Family Transportation Benefit,"Coverage up to ₹10,000 for transporting a family member if insured is hospitalized."
-Tata five lakhs,Evacuation Benefit,"Coverage up to ₹5,000 for evacuation due to accidental injury."
-Tata five lakhs,Common Disaster Benefit,"Coverage up to ₹50,000 if spouse also passes away in the same accident."
-Tata five lakhs,Coma,"Coverage up to ₹50,000 if the insured enters a coma due to an accident."
-Tata five lakhs,Ambulance Services,"Coverage up to ₹1,000 for ambulance expenses due to accidental injury."
-Tata five lakhs,Accidental Medical Expenses,"Coverage up to ₹50,000 for inpatient accidental medical expenses."
-Tata five lakhs,Accidental Dismemberment Paralysis,"Coverage up to ₹5,00,000 for accidental dismemberment or paralysis."
-Tata five lakhs,Accidental Death,"Coverage up to ₹5,00,000 for death due to an accident."
-New India Assurance Ten lacs,Accidental Dismemberment,Covers accidental dismemberment up to ₹10 lakhs.
-New India Assurance Ten lacs,Permanent Partial Disability,Offers up to ₹10 lakhs (as per disability scale) for permanent partial disability.
-New India Assurance Ten lacs,Permanent Total Disability,Pays ₹10 lakhs if the insured suffers permanent total disability due to an accident.
-New India Assurance Ten lacs,Accidental Death,Provides a lump-sum benefit of ₹10 lakhs in case of accidental death.
-New India Assurance Five Lacs,Accidental Dismemberment,Covers accidental dismemberment up to ₹5 lakhs.
-New India Assurance Five Lacs,Permanent Partial Disability,Offers up to ₹5 lakhs (as per disability scale) for permanent partial disability.
-New India Assurance Five Lacs,Permanent Total Disability,Pays ₹5 lakhs for permanent total disability due to an accident.
-New India Assurance Five Lacs,Accidental Death,Provides a lump-sum benefit of ₹5 lakhs in case of accidental death.
-Abhi five,Funeral Expenses,"Covered up to ₹5,000."
-Abhi five,Compassionate Visit,"Covered up to ₹15,000."
-Abhi five,Education Fund,₹1 lakh for maximum 2 eligible children in case of accidental death.
-Abhi five,Accidental In Patient,"Covered up to ₹50,000 with minimum 24-hour hospitalization required."
-Abhi five,Permanent Partial Disability,Covered up to ₹5 lakhs.
-Abhi five,Permanent Total Disability,Covered up to ₹5 lakhs.
-Abhi five,Accidental Death,Covered up to ₹5 lakhs.
-Niva Bupa,Broken Bones Benefit,"Pays for fractures up to ₹1,00,000 (15L cover)"
-Niva Bupa,Coma Benefit,"Covers up to ₹1,00,000 (15L cover)"
-Niva Bupa,Education Fund For Children,"Up to ₹1,00,000 per child (max 2 children) (10L cover)"
-Niva Bupa,Accidental Death,"Pays lump sum for death due to accident (₹10,00,000).(10L Cover)"
-Abhi fifteen,Funeral Expenses,"Up to ₹5,000"
-Abhi fifteen,Education Fund For Children,"Up to ₹1,00,000 per child (max 2 children)"
-Abhi fifteen,Compassionate Visit,"Travel expense for family up to ₹25,000"
-Abhi fifteen,Coma Benefit,"Covers up to ₹1,00,000"
-Abhi fifteen,Accidental Hospital Cash,"₹1,000/day (max 30 days)"
-Abhi fifteen,Permanent Total Disablement PTD,"Pays full ₹15,00,000"
-Abhi fifteen,Permanent Partial Disablement PPD,"Pays up to ₹15,00,000"
-Abhi fifteen,Out Patient Expenses,"OPD cover up to ₹30,000"
-Abhi fifteen,Broken Bones Benefit,"Pays for fractures up to ₹1,00,000"
-Abhi fifteen,Accidental In Patient Hospitalization,"Covers accidental hospitalization up to ₹60,000"
-Abhi fifteen,Accidental Death,Pays lump sum for death due to accident
-Abhi ten,Funeral Expenses,"Up to ₹5,000"
-Abhi ten,Education Fund For Children,"Up to ₹1,00,000 per child (max 2 children)"
-Abhi ten,Compassionate Visit,"Travel expense for family up to ₹25,000"
-Abhi ten,Coma Benefit,"Covers up to ₹1,00,000"
-Abhi ten,Accidental Hospital Cash,"₹1,000/day (max 30 days)"
-Abhi ten,Permanent Total Disablement PTD,Pays full sum insured
-Abhi ten,Permanent Partial Disablement,"Pays up to ₹10,00,000 for PPD."
-Abhi ten,Out Patient Expenses,"OPD cover up to ₹30,000"
-Abhi ten,Broken Bones Benefit,"Pays for fractures up to ₹1,00,000"
-Abhi ten,Accidental In Patient Hospitalization,"Covers accidental hospitalization up to ₹60,000."
-Abhi ten,Accidental Death,"Pays lump sum for death due to accident (₹10,00,000)."
-Reliance GAG,Death PTD And Permanent Partial Disability,"In the event of Accidental death or Permanent Total
-Disablement of the Insured due to an accident, the Company shall
-pay as an education grant for up to 2 dependent children below the
-age of 21 years, an amount equal to 10% of the capital sum
-insured subject to maximum of Rs. 50,000."
-TATA,Terrorism,Covers accidental injuries or death arising from terrorism-related events.
-TATA,Teleconsultation General,Allows unlimited teleconsultations through Tata AIG mobile application.
-TATA,Repatriation Of Remains,Covers cost of transporting mortal remains to home city/location.
-TATA,Redeemable Voucher Discount,Provides discount vouchers redeemable on network services via Tata AIG app.
-TATA,Permanent Total Disability,Pays full Sum Insured for accident-caused permanent and total disability.
-TATA,Permanent Partial Disability,Pays benefit based on disability percentage for accident-caused partial disability.
-TATA,Fixed Medex IPD SI,Covers fixed amount for inpatient medical expenses due to accidental injury.
-TATA,In Hospital Daily Cash,Pays daily cash amount for each inpatient day due to accidental injury.
-TATA,Family Transportation Benefit,Reimburses family travel expenses to visit insured hospitalized after accident.
-TATA,Funeral Benefits,Pays lump sum towards funeral expenses after accidental death.
-TATA,Evacuation Benefit,Covers expenses for evacuating the insured from accident site or building.
-TATA,Education Benefit,Reimburses education expenses for eligible dependent children after a valid claim.
-TATA,Common Disaster Benefit,Pays defined benefit if spouse dies in same accident as insured.
-TATA,Coma,Pays lump sum if insured suffers a coma due to a covered accident.
-TATA,Ambulanace Services,Ambulanace Services
-TATA,Accidental Medical Expenses,Accidental Medical Expenses
-TATA,Accidental Dismemberment And Paralysis,Accidental Dismemberment And Paralysis
-TATA,Accidental Dealth,Accidental Dealth
-RSPA,Home Vehicle Modification,Covers required home or vehicle modifications due to PTD.
-RSPA,Educational Grant,Provides educational support for dependent children after death/PTD.
-RSPA,Carriage Of Dead Body,"Covers transportation of the deceased insured’s body up to ₹5,000."
-RSPA,Medical Expenses Accident,Covers accident-related hospitalization up to defined policy limits.
-PA ten lakhs bajaj,Health Prime Rider Individual Option 1,Tele-consultation cover = Unlimited (GPs) + Annual preventive health check-up cover = 1 voucher.
-PA ten lakhs bajaj,Lifestyle Modification Benefit,Lump sum benefit will be payable.
-PA ten lakhs bajaj,Air Ambulance,"Air ambulance expenses covered up to INR 1,00,000."
-PA ten lakhs bajaj,Accidental Hospitalization,"Payable up to the Sum Insured for any accidental bodily injury; room category general ward only; Road ambulance covered (INR 1,000 per claim)."
-PA ten lakhs bajaj,Accidental Hospital Daily Allowance,Per day benefit INR 500 for up to 10 days; with a 2-day deductible; no double ICU benefit.
-PA ten lakhs bajaj,Child Education Benefit,"Pays INR 50,000 as lump sum benefit in case of death or permanent total disability."
-PA ten lakhs bajaj,Coma Care,"Pays INR 50,000 if injury due to an accident results in coma of specified severity."
-PA ten lakhs bajaj,Transportation Of Mortal Remains,"Lump sum benefit payable up to INR 5,000."
-PA ten lakhs bajaj,Funeral Expenses,"Pays towards funeral costs up to INR 5,000 if the insured person sustains injury that results in accidental death during the cover period."
-PA ten lakhs bajaj,Permanent Partial Disability,"Pays a fixed percentage of Sum Insured if bodily injury results in permanent partial disability, up to INR 10,00,000."
-PA ten lakhs bajaj,Permanent Total Disability,"Pays INR 10,00,000 if bodily injury results in permanent total disability."
-PA ten lakhs bajaj,Accidental Death Cover,"Pays INR 10,00,000 if bodily injury results in accidental death."
-PA five lakhs bajaj,Funeral Benefits,"Pays towards funeral costs up to INR 5,000 if the insured person sustains injury resulting in accidental death during the cover period."
-PA five lakhs bajaj,Transportation Of Mortal Remains,"Lump sum benefit payable up to INR 5,000 or actuals, whichever is lower."
-PA five lakhs bajaj,Coma Care,"Pays INR 50,000 if injury due to an accident results in coma of specified severity."
-PA five lakhs bajaj,Accidental Hospitalization Expenses,Payable up to the Sum Insured for any accidental bodily injury; room category is general ward only; includes 15 days pre-hospitalization and 30 days post-hospitalization coverage.
-PA five lakhs bajaj,Permanent Partial Disability,"Pays a fixed percentage if bodily injury results in permanent partial disability up to INR 5,00,000."
-PA five lakhs bajaj,Permanent Total Disability,"Pays INR 5,00,000 if bodily injury results in permanent total disability."
-PA five lakhs bajaj,Accidental Death,"Pays INR 5,00,000 if bodily injury results in accidental death."
-RSPA,Permanent Partial Disablement,Coverage for permanent partial disability due to an accident. Payout as per insurer's disability percentage and policy terms.
-RSPA,Permanent Total Disablement,Coverage for total and permanent disability due to an accident. Full Sum Insured payable depending on chosen SI.
-RSPA,Accidental Death,"Coverage for death of the Insured Person due to an accident. Sum Insured payable as per selected plan (₹5,00,000 or ₹10,00,000)."`;
-
-        // Function to parse CSV data
-        function parseCSV(csv) {
-            const lines = csv.split('\n');
-            const headers = lines[0].split(',').map(h => h.trim());
-            const data = [];
-            for (let i = 1; i < lines.length; i++) {
-                if (lines[i].trim() === '') continue;
-                const values = lines[i].split(',').map(v => v.trim());
-                // Handle descriptions with commas (they are in quotes)
-                let descStartIndex = lines[i].indexOf('"');
-                if (descStartIndex !== -1) {
-                    let descEndIndex = lines[i].indexOf('"', descStartIndex + 1);
-                    while (descEndIndex !== -1 && lines[i][descEndIndex - 1] === '\\') {
-                        descEndIndex = lines[i].indexOf('"', descEndIndex + 1);
-                    }
-                    if (descEndIndex !== -1) {
-                        const beforeDesc = lines[i].substring(0, descStartIndex);
-                        const description = lines[i].substring(descStartIndex + 1, descEndIndex);
-                        const afterDesc = lines[i].substring(descEndIndex + 1);
-                        const beforeParts = beforeDesc.split(',').map(v => v.trim()).filter(v => v);
-                        const afterParts = afterDesc.split(',').map(v => v.trim()).filter(v => v);
-                        const rowParts = [...beforeParts, description, ...afterParts];
-                        if (rowParts.length >= 3) {
-                            const row = {
-                                [headers[0]]: rowParts[0],
-                                [headers[1]]: rowParts[1],
-                                [headers[2]]: rowParts.slice(2).join(', ')
-                            };
-                            data.push(row);
-                            continue;
-                        }
-                    }
-                }
-                if (values.length >= 3) {
-                    const row = {
-                        [headers[0]]: values[0],
-                        [headers[1]]: values[1],
-                        [headers[2]]: values.slice(2).join(', ')
-                    };
-                    data.push(row);
-                }
+        // Create stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 150;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = Math.random() * 2 + 2 + 's';
+                starsContainer.appendChild(star);
             }
-            return data;
         }
-
-        // Function to normalize feature names (consolidate similar names)
-        function normalizeName(name) {
-            if (!name) return '';
-            let normalized = name.toLowerCase().trim();
-
-            // Consolidation rules with icons
-            if (normalized.includes('accidental death') || normalized.includes('accidental dealth') || normalized.includes('death cover')) {
-                return 'Accidental Death';
-            }
-            if (normalized.includes('permanent total') && (normalized.includes('disable') || normalized.includes('disability'))) {
-                return 'Permanent Total Disability';
-            }
-            if (normalized.includes('permanent partial') && (normalized.includes('disable') || normalized.includes('disability'))) {
-                return 'Permanent Partial Disability';
-            }
-            if (normalized.includes('education') && (normalized.includes('grant') || normalized.includes('benefit') || normalized.includes('fund'))) {
-                return 'Education Grant/Benefit';
-            }
-            if (normalized.includes('funeral') || normalized.includes('last rites') || normalized.includes('burial')) {
-                return 'Funeral/Last Rites Expenses';
-            }
-            if (normalized.includes('terrorism')) {
-                return 'Terrorism Coverage';
-            }
-            if (normalized.includes('teleconsultation')) {
-                return 'Teleconsultation';
-            }
-            if (normalized.includes('coma')) {
-                return 'Coma Benefit';
-            }
-            if (normalized.includes('ambulance')) {
-                return 'Ambulance Services';
-            }
-            if (normalized.includes('dismemberment') || normalized.includes('paralysis')) {
-                return 'Accidental Dismemberment/Paralysis';
-            }
-            if (normalized.includes('medical expense') && normalized.includes('accidental')) {
-                return 'Accidental Medical Expenses';
-            }
-            if (normalized.includes('hospital cash') || normalized.includes('daily cash') || normalized.includes('daily allowance')) {
-                return 'Hospital Daily Cash';
-            }
-            if (normalized.includes('repatriation') || normalized.includes('remains') || normalized.includes('mortal remains') || normalized.includes('dead body') || normalized.includes('carriage of dead')) {
-                return 'Repatriation of Remains';
-            }
-            if (normalized.includes('family transportation') || normalized.includes('compassionate visit')) {
-                return 'Family Transportation/Visit';
-            }
-            if (normalized.includes('evacuation')) {
-                return 'Evacuation Benefit';
-            }
-            if (normalized.includes('common disaster')) {
-                return 'Common Disaster Benefit';
-            }
-            if (normalized.includes('broken bones') || normalized.includes('fracture')) {
-                return 'Broken Bones/Fracture Benefit';
-            }
-            if (normalized.includes('inpatient') && normalized.includes('accidental')) {
-                return 'Accidental Inpatient Hospitalization';
-            }
-            if (normalized.includes('outpatient') || normalized.includes('opd')) {
-                return 'Outpatient (OPD) Expenses';
-            }
-            // Return the original name with first letters capitalized if no rule matches
-            return name.replace(/\b\w/g, char => char.toUpperCase());
-        }
-
-        // Category icons mapping
-        const categoryIcons = {
-            'Accidental Death': 'fas fa-skull-crossbones',
-            'Permanent Total Disability': 'fas fa-wheelchair',
-            'Permanent Partial Disability': 'fas fa-user-injured',
-            'Education Grant/Benefit': 'fas fa-graduation-cap',
-            'Funeral/Last Rites Expenses': 'fas fa-church',
-            'Terrorism Coverage': 'fas fa-user-shield',
-            'Teleconsultation': 'fas fa-video',
-            'Coma Benefit': 'fas fa-bed',
-            'Ambulance Services': 'fas fa-ambulance',
-            'Accidental Dismemberment/Paralysis': 'fas fa-ban',
-            'Accidental Medical Expenses': 'fas fa-file-medical',
-            'Hospital Daily Cash': 'fas fa-money-bill-wave',
-            'Repatriation of Remains': 'fas fa-plane',
-            'Family Transportation/Visit': 'fas fa-car',
-            'Evacuation Benefit': 'fas fa-helicopter',
-            'Common Disaster Benefit': 'fas fa-exclamation-triangle',
-            'Broken Bones/Fracture Benefit': 'fas fa-bone-break',
-            'Accidental Inpatient Hospitalization': 'fas fa-procedures',
-            'Outpatient (OPD) Expenses': 'fas fa-stethoscope',
-            'default': 'fas fa-shield-alt'
-        };
-
-        // Parse the data and structure it
-        const rawData = parseCSV(csvData);
-        console.log("Parsed Data:", rawData.length, "rows");
-
-        // Create a structured data object: { normalizedCategory: { brand: [ { originalName, description } ] } }
-        const structuredData = {};
-        // Also track counts for each category
-        const categoryCounts = {};
-
-        rawData.forEach(row => {
-            const brand = row.feature_category__name;
-            const originalName = row.name;
-            const normalizedName = normalizeName(originalName);
-            const description = row.description;
-
-            if (!structuredData[normalizedName]) {
-                structuredData[normalizedName] = {};
-                categoryCounts[normalizedName] = 0;
-            }
-            if (!structuredData[normalizedName][brand]) {
-                structuredData[normalizedName][brand] = [];
-            }
-            structuredData[normalizedName][brand].push({
-                originalName: originalName,
-                description: description
-            });
-            // Count each feature entry for this category
-            categoryCounts[normalizedName]++;
-        });
-
-        console.log("Structured Data:", structuredData);
-        console.log("Category Counts:", categoryCounts);
-
-        // Get DOM elements
-        const categoryListEl = document.getElementById('categoryList');
-        const brandsPanelEl = document.getElementById('brandsPanel');
-        const selectedCategoryNameEl = document.getElementById('selectedCategoryName');
-        const selectedCategoryBadge = document.getElementById('selectedCategoryBadge');
-        const brandListEl = document.getElementById('brandList');
-        const detailsPanelEl = document.getElementById('detailsPanel');
-        const emptyDetailsEl = document.getElementById('emptyDetails');
-        const detailsContentEl = document.getElementById('detailsContent');
-        const detailCategoryTagEl = document.getElementById('detailCategoryTag');
-        const detailFeatureNameEl = document.getElementById('detailFeatureName');
-        const detailBrandNameEl = document.getElementById('detailBrandName');
-        const detailDescriptionEl = document.getElementById('detailDescription');
-        const totalFeaturesEl = document.getElementById('totalFeatures');
-        const totalBrandsEl = document.getElementById('totalBrands');
-        const totalCategoriesEl = document.getElementById('totalCategories');
-        const categoryCountEl = document.getElementById('categoryCount');
-        const brandCountEl = document.getElementById('brandCount');
-        const categorySearchEl = document.getElementById('categorySearch');
-        const coverageTypeEl = document.getElementById('coverageType');
-        const benefitRangeEl = document.getElementById('benefitRange');
-
-        // State variables
-        let selectedCategory = null;
-        let selectedBrand = null;
-        let allCategories = [];
-
-        // Get all unique brands
-        const allBrands = new Set();
-        rawData.forEach(row => {
-            allBrands.add(row.feature_category__name);
-        });
-
-        // Update statistics
-        totalFeaturesEl.textContent = rawData.length;
-        totalBrandsEl.textContent = allBrands.size;
-        totalCategoriesEl.textContent = Object.keys(structuredData).length;
-
-        // Populate the category list with icons and counts
-        const sortedCategories = Object.keys(structuredData).sort();
-        allCategories = sortedCategories;
         
-        function renderCategories(categories) {
-            categoryListEl.innerHTML = '';
-            categories.forEach(category => {
-                const li = document.createElement('li');
-                li.className = 'category-item';
-                const iconClass = categoryIcons[category] || categoryIcons.default;
-                li.innerHTML = `
-                    <div class="category-name">
-                        <div class="category-icon">
-                            <i class="${iconClass}"></i>
-                        </div>
-                        <span>${category}</span>
-                    </div>
-                    <span class="category-count">${categoryCounts[category]}</span>
-                `;
-                li.dataset.category = category;
-                li.addEventListener('click', () => selectCategory(category));
-                categoryListEl.appendChild(li);
+        // Matrix rain effect
+        function initMatrixRain() {
+            const canvas = document.getElementById('matrixCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const characters = '01';
+            const fontSize = 14;
+            const columns = canvas.width / fontSize;
+            const drops = Array(Math.floor(columns)).fill(1);
+            
+            function drawMatrix() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#0f0';
+                ctx.font = fontSize + 'px monospace';
+                
+                for (let i = 0; i < drops.length; i++) {
+                    const text = characters[Math.floor(Math.random() * characters.length)];
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            }
+            
+            setInterval(drawMatrix, 35);
+            
+            window.addEventListener('resize', function() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
             });
         }
         
-        renderCategories(sortedCategories);
-
-        // Update category count
-        categoryCountEl.textContent = sortedCategories.length;
-
-        // Search functionality
-        categorySearchEl.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            if (searchTerm === '') {
-                renderCategories(sortedCategories);
-            } else {
-                const filtered = sortedCategories.filter(category => 
-                    category.toLowerCase().includes(searchTerm)
-                );
-                renderCategories(filtered);
-            }
-        });
-
-        // Function to handle category selection
-        function selectCategory(category) {
-            // Update UI state
-            selectedCategory = category;
-            selectedBrand = null;
-
-            // Update active states in category list
-            document.querySelectorAll('.category-item').forEach(item => {
-                item.classList.remove('active');
-                if (item.dataset.category === category) {
-                    item.classList.add('active');
-                }
-            });
-
-            // Update the selected category name
-            selectedCategoryNameEl.textContent = category;
-
-            // Populate the brands list with counts
-            brandListEl.innerHTML = '';
-            const brandsForCategory = Object.keys(structuredData[category]).sort();
+        // Create confetti
+        function createConfetti() {
+            const colors = ['#ff0080', '#00dbde', '#ffcc00', '#ff0000', '#00ff00', '#0000ff'];
             
-            // Update brand count
-            brandCountEl.textContent = `${brandsForCategory.length} plan${brandsForCategory.length !== 1 ? 's' : ''}`;
-            
-            if (brandsForCategory.length === 0) {
-                const li = document.createElement('li');
-                li.className = 'brand-item';
-                li.textContent = 'No plans found for this feature.';
-                brandListEl.appendChild(li);
-            } else {
-                brandsForCategory.forEach(brand => {
-                    const li = document.createElement('li');
-                    li.className = 'brand-item';
-                    const featureCount = structuredData[category][brand].length;
-                    // Get first letter for logo
-                    const brandFirstLetter = brand.charAt(0);
-                    li.innerHTML = `
-                        <div class="brand-name">
-                            <div class="brand-logo">${brandFirstLetter}</div>
-                            <span>${brand}</span>
-                        </div>
-                        <span class="brand-feature-count">${featureCount}</span>
-                    `;
-                    li.dataset.brand = brand;
-                    li.addEventListener('click', () => selectBrand(brand));
-                    brandListEl.appendChild(li);
+            for (let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = Math.random() * 100 + 'vh';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 20 + 5 + 'px';
+                confetti.style.height = confetti.style.width;
+                confetti.style.opacity = '1';
+                confetti.style.animation = `fadeIn 1s ${Math.random() * 2}s forwards`;
+                document.body.appendChild(confetti);
+                
+                // Animate confetti falling
+                const duration = Math.random() * 3 + 2;
+                confetti.animate([
+                    { transform: 'translateY(-100vh) rotate(0deg)' },
+                    { transform: `translateY(100vh) rotate(${Math.random() * 720}deg)` }
+                ], {
+                    duration: duration * 1000,
+                    easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)',
+                    delay: Math.random() * 2000
                 });
+                
+                // Remove confetti after animation
+                setTimeout(() => confetti.remove(), duration * 1000 + 2000);
             }
-
-            // Show the brands panel
-            brandsPanelEl.classList.add('visible');
-
-            // Reset and hide details panel
-            emptyDetailsEl.style.display = 'block';
-            detailsContentEl.style.display = 'none';
-            detailsPanelEl.classList.add('visible');
-
-            // Clear any active brand selection
-            document.querySelectorAll('.brand-item').forEach(item => {
-                item.classList.remove('active');
-            });
         }
-
-        // Function to handle brand selection
-        function selectBrand(brand) {
-            selectedBrand = brand;
-
-            // Update active states in brand list
-            document.querySelectorAll('.brand-item').forEach(item => {
-                item.classList.remove('active');
-                if (item.dataset.brand === brand) {
-                    item.classList.add('active');
+        
+        // Transition from terminal to birthday message
+        function showBirthdayMessage() {
+            const terminal = document.getElementById('terminal');
+            const birthdayMessage = document.getElementById('birthdayMessage');
+            
+            // Hide terminal with fade out
+            terminal.style.opacity = '0';
+            terminal.style.transition = 'opacity 1s ease-in-out';
+            
+            setTimeout(() => {
+                terminal.style.display = 'none';
+                birthdayMessage.style.display = 'flex';
+                birthdayMessage.style.opacity = '0';
+                birthdayMessage.style.animation = 'fadeIn 1s forwards';
+                
+                // Create effects
+                createStars();
+                createConfetti();
+                
+                // Continue matrix rain
+                initMatrixRain();
+            }, 1000);
+        }
+        
+        // Initialize on page load
+        window.onload = function() {
+            createStars();
+            initMatrixRain();
+            
+            // Show birthday message after ALL terminal animations complete
+            // Last animation delay is 6.5s + animation duration of 3s = 9.5s
+            setTimeout(showBirthdayMessage, 9500);
+            
+            // Add click/tap to skip
+            document.body.addEventListener('click', function() {
+                const terminal = document.getElementById('terminal');
+                if (terminal.style.display !== 'none') {
+                    showBirthdayMessage();
                 }
             });
-
-            // Populate the details panel
-            const features = structuredData[selectedCategory][brand];
-            // For simplicity, take the first feature entry for this brand/category
-            const feature = features[0];
-
-            detailCategoryTagEl.textContent = selectedCategory;
-            detailFeatureNameEl.textContent = feature.originalName;
-            detailBrandNameEl.textContent = brand;
-            detailDescriptionEl.textContent = feature.description || 'No description available.';
-
-            // Set coverage type and benefit range based on feature
-            let coverageType = 'Accidental';
-            let benefitRange = '₹5,000 - ₹15L';
             
-            if (selectedCategory.includes('Death')) {
-                coverageType = 'Life Coverage';
-            } else if (selectedCategory.includes('Disability')) {
-                coverageType = 'Disability Coverage';
-            } else if (selectedCategory.includes('Medical') || selectedCategory.includes('Hospital')) {
-                coverageType = 'Medical Coverage';
-            } else if (selectedCategory.includes('Education')) {
-                coverageType = 'Family Benefit';
-            }
-            
-            // Try to extract benefit range from description
-            const desc = feature.description;
-            const amountMatches = desc.match(/₹[\d,]+/g);
-            if (amountMatches && amountMatches.length > 0) {
-                const amounts = amountMatches.map(m => parseInt(m.replace(/[₹,]/g, '')));
-                const minAmount = Math.min(...amounts);
-                const maxAmount = Math.max(...amounts);
-                if (minAmount === maxAmount) {
-                    benefitRange = `₹${minAmount.toLocaleString()}`;
-                } else {
-                    benefitRange = `₹${minAmount.toLocaleString()} - ₹${maxAmount.toLocaleString()}`;
+            // Add spacebar to skip
+            document.addEventListener('keydown', function(e) {
+                if (e.code === 'Space' || e.key === ' ') {
+                    const terminal = document.getElementById('terminal');
+                    if (terminal.style.display !== 'none') {
+                        showBirthdayMessage();
+                    }
                 }
-            }
-            
-            coverageTypeEl.textContent = coverageType;
-            benefitRangeEl.textContent = benefitRange;
-
-            // Show the details content
-            emptyDetailsEl.style.display = 'none';
-            detailsContentEl.style.display = 'block';
-            detailsPanelEl.classList.add('visible');
-        }
-
-        // Auto-select the first category on load
-        if (sortedCategories.length > 0) {
-            // Small delay to ensure DOM is ready
-            setTimeout(() => selectCategory(sortedCategories[0]), 100);
-        }
+            });
+        };
     </script>
 </body>
 </html>
