@@ -104,13 +104,10 @@
         }
         
         .name-display {
-            font-size: 5rem;
-            color: #ffcc00;
-            text-shadow: 0 0 30px #ffcc00;
-            margin: 40px 0;
-            animation: pulse 1.5s ease-in-out infinite;
-            font-family: 'Arial Black', sans-serif;
-            letter-spacing: 2px;
+    display: block;
+    z-index: 10;
+    position: relative;
+}
         }
         
         .birthday-text {
@@ -253,8 +250,8 @@
     <div class="birthday-message" id="birthdayMessage">
         <div class="stars" id="stars"></div>
         <div class="birthday-content">
-           <div class="name-display">Geetuu</div>
 <h1 class="birthday-title">🎂 HAPPY BIRTHDAY! 🎉</h1>
+   <div class="name-display">Geetuu</div>
             <p class="birthday-text">
                 May your day be filled with cosmic joy,<br>
                 interstellar adventures, and<br>
@@ -414,7 +411,5 @@
     </script>
 </body>
 </html>
-
-
 
 
