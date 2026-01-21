@@ -1,1 +1,996 @@
-abc
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insurance Project Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 10px;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #0d6efd, #0a58ca);
+            color: white;
+            padding: 20px 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .header h1 i {
+            margin-right: 10px;
+            font-size: 26px;
+        }
+        
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        /* Stats */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0d6efd;
+            display: block;
+            line-height: 1.2;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 5px;
+        }
+        
+        /* Filters */
+        .filter-container {
+            background: white;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+        }
+        
+        .filter-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .filter-group {
+            margin-bottom: 0;
+        }
+        
+        .filter-label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+            color: #444;
+        }
+        
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: white;
+            color: #333;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 16px;
+        }
+        
+        .reset-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #0d6efd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 5px;
+            grid-column: span 2;
+        }
+        
+        .reset-btn i {
+            margin-right: 8px;
+        }
+        
+        /* Insurer Cards */
+        .insurer-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .insurer-header {
+            padding: 18px 15px;
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+        }
+        
+        .insurer-content {
+            padding: 0;
+        }
+        
+        .product-item {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .product-item:last-child {
+            border-bottom: none;
+        }
+        
+        .product-name {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .product-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .lob-badge {
+            background-color: #e9ecef;
+            color: #495057;
+        }
+        
+        .status-badge.completed {
+            background-color: rgba(25, 135, 84, 0.15);
+            color: #198754;
+            border: 1px solid rgba(25, 135, 84, 0.3);
+        }
+        
+        .status-badge.wip {
+            background-color: rgba(255, 193, 7, 0.15);
+            color: #856404;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+        
+        .status-badge.pending {
+            background-color: rgba(220, 53, 69, 0.15);
+            color: #dc3545;
+            border: 1px solid rgba(220, 53, 69, 0.3);
+        }
+        
+        .setup-badge {
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .setup-done {
+            background-color: rgba(25, 135, 84, 0.15);
+            color: #198754;
+            border: 1px solid rgba(25, 135, 84, 0.3);
+        }
+        
+        .setup-not-done {
+            background-color: rgba(220, 53, 69, 0.15);
+            color: #dc3545;
+            border: 1px solid rgba(220, 53, 69, 0.3);
+        }
+        
+        .api-status {
+            display: inline-flex;
+            align-items: center;
+            font-size: 13px;
+        }
+        
+        .api-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        
+        .api-received {
+            background-color: #198754;
+        }
+        
+        .api-partial {
+            background-color: #ffc107;
+        }
+        
+        .api-pending {
+            background-color: #dc3545;
+        }
+        
+        .pm-info {
+            font-size: 13px;
+            color: #666;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .pm-tag {
+            background-color: #e3f2fd;
+            color: #1565c0;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 5px;
+        }
+        
+        .uat-date {
+            font-size: 13px;
+            color: #666;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .date-icon {
+            margin-right: 5px;
+            font-size: 12px;
+        }
+        
+        .remark {
+            font-size: 13px;
+            color: #666;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 8px;
+        }
+        
+        /* Legend */
+        .legend-card {
+            background: white;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+        }
+        
+        .legend-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .legend-title i {
+            margin-right: 8px;
+            color: #0d6efd;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            color: #666;
+            font-size: 13px;
+            padding: 20px 0;
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        /* No results */
+        .no-results {
+            text-align: center;
+            padding: 40px 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+        }
+        
+        .no-results i {
+            font-size: 48px;
+            color: #ddd;
+            margin-bottom: 15px;
+        }
+        
+        .no-results h3 {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        /* Active state for buttons */
+        select:active, .reset-btn:active {
+            transform: scale(0.98);
+        }
+        
+        /* Responsive adjustments */
+        @media (min-width: 400px) {
+            .stats-container {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .filter-row {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .reset-btn {
+                grid-column: span 4;
+            }
+        }
+        
+        /* PM Filter Styles */
+        .pm-filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .pm-filter-btn {
+            padding: 8px 12px;
+            background-color: #e9ecef;
+            border: none;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .pm-filter-btn.active {
+            background-color: #0d6efd;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1><span>📊</span> Insurance Project Tracker</h1>
+            <p>IPPB Project - All 60 Lines - Insurance Company Wise Status</p>
+            <div style="margin-top: 10px; display: flex; gap: 10px; font-size: 12px;">
+                <span style="background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 10px;">Total Lines: 60</span>
+                <span style="background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 10px;">Jan 2026</span>
+            </div>
+        </div>
+        
+        <!-- Stats -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <span class="stat-value" id="total-insurers">12</span>
+                <span class="stat-label">Insurance Companies</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value" id="total-products">60</span>
+                <span class="stat-label">Products Tracked</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value" id="completed-products">28</span>
+                <span class="stat-label">Completed</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value" id="wip-products">32</span>
+                <span class="stat-label">In Progress</span>
+            </div>
+        </div>
+        
+        <!-- Filters -->
+        <div class="filter-container">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label class="filter-label">Insurance Company</label>
+                    <select id="insurer-filter">
+                        <option value="all">All Companies</option>
+                        <option value="ADITYA BIRLA">ADITYA BIRLA</option>
+                        <option value="ROYAL SUNDARAM">ROYAL SUNDARAM</option>
+                        <option value="BAJAJ">BAJAJ</option>
+                        <option value="NIA">NIA</option>
+                        <option value="NIVA BUPA">NIVA BUPA</option>
+                        <option value="RELIANCE">RELIANCE</option>
+                        <option value="STAR">STAR</option>
+                        <option value="TATA">TATA</option>
+                        <option value="AXIS MAX LIFE">AXIS MAX LIFE</option>
+                        <option value="PNB MET LIFE">PNB MET LIFE</option>
+                        <option value="HDFC">HDFC</option>
+                        <option value="SBI">SBI</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Line of Business</label>
+                    <select id="lob-filter">
+                        <option value="all">All LOBs</option>
+                        <option value="Affinity / Group">Affinity / Group</option>
+                        <option value="Retail Motor">Retail Motor</option>
+                        <option value="Retail Health">Retail Health</option>
+                        <option value="Endowment">Endowment</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Status</label>
+                    <select id="status-filter">
+                        <option value="all">All Status</option>
+                        <option value="Completed">Completed</option>
+                        <option value="WIP">Work in Progress</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Product Setup</label>
+                    <select id="setup-filter">
+                        <option value="all">All Setup Status</option>
+                        <option value="done">Done</option>
+                        <option value="not-done">Not Done</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- PM Filter -->
+            <div class="filter-group">
+                <label class="filter-label">Project Manager</label>
+                <div class="pm-filter-container" id="pm-filter">
+                    <button class="pm-filter-btn active" data-pm="all">All PMs</button>
+                    <button class="pm-filter-btn" data-pm="Komal">Komal</button>
+                    <button class="pm-filter-btn" data-pm="Mayank">Mayank</button>
+                    <button class="pm-filter-btn" data-pm="Rehan">Rehan</button>
+                    <button class="pm-filter-btn" data-pm="Yaseen">Yaseen</button>
+                    <button class="pm-filter-btn" data-pm="Sandeep">Sandeep</button>
+                </div>
+            </div>
+            
+            <button class="reset-btn" id="reset-filters">
+                <span>🔄</span> Reset All Filters
+            </button>
+        </div>
+        
+        <!-- Insurer Cards -->
+        <div id="insurer-cards">
+            <!-- Cards will be loaded here -->
+        </div>
+        
+        <!-- Legend -->
+        <div class="legend-card">
+            <div class="legend-title">
+                <span>🔑</span> Status Legend
+            </div>
+            
+            <div class="legend-item">
+                <span class="api-dot api-received"></span>
+                <span style="font-weight: 600; margin-right: 10px;">Received</span>
+                <span style="color: #666; font-size: 13px;">API kit fully received</span>
+            </div>
+            
+            <div class="legend-item">
+                <span class="api-dot api-partial"></span>
+                <span style="font-weight: 600; margin-right: 10px;">Partial</span>
+                <span style="color: #666; font-size: 13px;">API kit partially received</span>
+            </div>
+            
+            <div class="legend-item">
+                <span class="api-dot api-pending"></span>
+                <span style="font-weight: 600; margin-right: 10px;">Pending</span>
+                <span style="color: #666; font-size: 13px;">API kit not received yet</span>
+            </div>
+            
+            <div class="legend-item" style="margin-top: 15px;">
+                <span class="setup-badge setup-done" style="margin-right: 10px;">Done</span>
+                <span style="color: #666; font-size: 13px;">Product setup completed at FT end</span>
+            </div>
+            
+            <div class="legend-item">
+                <span class="setup-badge setup-not-done" style="margin-right: 10px;">Not Done</span>
+                <span style="color: #666; font-size: 13px;">Product setup pending at FT end</span>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>IPPB Project Plan - All LOB Tracker (Complete 60 Lines)</p>
+            <p style="font-size: 12px; margin-top: 5px;">Data from Excel (Lines 1-60) • Updated: Jan 21, 2026</p>
+        </div>
+    </div>
+
+    <script>
+        // Complete insurance data from Excel (all 60 lines)
+        const insuranceData = [
+            {
+                insurer: "ADITYA BIRLA",
+                color: "#1E88E5",
+                products: [
+                    { lob: "Affinity / Group", product: "Vector Born", apiStatus: "Pending", ftStatus: "Pending", setup: "not-done", uatDate: "", remark: "Product Awaited from IC", pm: "Komal" },
+                    { lob: "Affinity / Group", product: "Women centric", apiStatus: "Pending", ftStatus: "Pending", setup: "not-done", uatDate: "", remark: "Product Awaited from IC", pm: "Komal" },
+                    { lob: "Affinity / Group", product: "TopUp", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "", remark: "Product Set up is done. Certificate testing is pending", pm: "Komal" },
+                    { lob: "Affinity / Group", product: "ASSY", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "", remark: "We have sent for UAT signed off, they are waiting for loader", pm: "Komal" },
+                    { lob: "Affinity / Group", product: "Group PA", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "2026-01-20", remark: "Not Received - Spoke to Lilawati", pm: "Komal" }
+                ]
+            },
+            {
+                insurer: "ROYAL SUNDARAM",
+                color: "#43A047",
+                products: [
+                    { lob: "Affinity / Group", product: "ASSY", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "2026-12-20", remark: "Product Set up is done. Certificate testing is pending", pm: "Komal" },
+                    { lob: "Affinity / Group", product: "Group PA", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "", remark: "Discussed with Amit. Will check and confirm for Email", pm: "Komal" },
+                    { lob: "Affinity / Group", product: "Nari Suraksha", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "2026-01-20", remark: "Product Set up is done. Certificate testing is pending", pm: "Komal" },
+                    { lob: "Affinity / Group", product: "Group Top up", apiStatus: "Received", ftStatus: "Pending", setup: "not-done", uatDate: "", remark: "Product Set up done. Komal to test", pm: "Komal" }
+                ]
+            },
+            {
+                insurer: "BAJAJ",
+                color: "#FB8C00",
+                products: [
+                    { lob: "Affinity / Group", product: "GHC", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "", remark: "Product Set up done. Komal to test", pm: "Komal" },
+                    { lob: "Affinity / Group", product: "TopUp - Flexi", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "", remark: "Product Set up done. Komal to test", pm: "Komal" },
+                    { lob: "Affinity / Group", product: "TopUp - Flexi + HPR", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "", remark: "Product Set up done. Komal to test", pm: "Komal" },
+                    { lob: "Affinity / Group", product: "Travel", apiStatus: "Received", ftStatus: "Pending", setup: "not-done", uatDate: "", remark: "Received on 17th Jan", pm: "Komal" },
+                    { lob: "Affinity / Group", product: "ASSY", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "", remark: "", pm: "Komal" },
+                    { lob: "Affinity / Group", product: "Group PA", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "2025-12-10", remark: "API is ready - content we need to share", pm: "Komal" }
+                ]
+            },
+            {
+                insurer: "NIA",
+                color: "#E53935",
+                products: [
+                    { lob: "Affinity / Group", product: "ASSY", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "", remark: "Testing WIP with QA. Release by 21 Jan", pm: "Komal" },
+                    { lob: "Affinity / Group", product: "Group PA", apiStatus: "Pending", ftStatus: "Completed", setup: "done", uatDate: "2025-12-18", remark: "NDA Pending", pm: "Komal" }
+                ]
+            },
+            {
+                insurer: "NIVA BUPA",
+                color: "#8E24AA",
+                products: [
+                    { lob: "Affinity / Group", product: "TopUp", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "", remark: "Product Set up done. Mayank to test", pm: "Mayank" },
+                    { lob: "Affinity / Group", product: "Group PA", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "2025-12-10", remark: "Sign off after certificate is integrated", pm: "Mayank" },
+                    { lob: "Affinity / Group", product: "Women Centric", apiStatus: "Pending", ftStatus: "Pending", setup: "not-done", uatDate: "", remark: "Product not available with us", pm: "Mayank" },
+                    { lob: "Affinity / Group", product: "Group Indemnity", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "", remark: "Testing with QA. Release by 21 Jan", pm: "Mayank" },
+                    { lob: "Affinity / Group", product: "ASSY", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "", remark: "Testing WIP with QA. Release by 21 Jan", pm: "Mayank" }
+                ]
+            },
+            {
+                insurer: "RELIANCE",
+                color: "#3949AB",
+                products: [
+                    { lob: "Affinity / Group", product: "GMC", apiStatus: "Pending", ftStatus: "Pending", setup: "not-done", uatDate: "", remark: "Haris is having a discussion with Karishma", pm: "Mayank" },
+                    { lob: "Affinity / Group", product: "TOPUP", apiStatus: "Pending", ftStatus: "Pending", setup: "not-done", uatDate: "", remark: "Haris is having a discussion with Karishma", pm: "Mayank" },
+                    { lob: "Affinity / Group", product: "Group PA", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "2025-12-10", remark: "We have sent the loader waiting for signed off", pm: "Mayank" }
+                ]
+            },
+            {
+                insurer: "STAR",
+                color: "#00ACC1",
+                products: [
+                    { lob: "Affinity / Group", product: "ASSY", apiStatus: "Pending", ftStatus: "Pending", setup: "not-done", uatDate: "", remark: "Product has been discontinued", pm: "Mayank" },
+                    { lob: "Affinity / Group", product: "Group Topup", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "", remark: "Product Set up done. Mayank to test", pm: "Mayank" },
+                    { lob: "Affinity / Group", product: "Group PA / ASSY", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "2025-12-22", remark: "New loader file has been updated and sent", pm: "Mayank" }
+                ]
+            },
+            {
+                insurer: "TATA",
+                color: "#5D4037",
+                products: [
+                    { lob: "Affinity / Group", product: "Group PA", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "2025-12-17", remark: "Praneeta said she will tell me by tomorrow morning", pm: "Mayank" },
+                    { lob: "Affinity / Group", product: "Property - AIGC - SME Merchant", apiStatus: "Received", ftStatus: "Pending", setup: "not-done", uatDate: "2026-01-23", remark: "Product will be completed by development team on Jan 22", pm: "Mayank" },
+                    { lob: "Affinity / Group", product: "Cyber - Smart Multi Assure", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "", remark: "Product Set up done. Mayank to test", pm: "Mayank" }
+                ]
+            },
+            {
+                insurer: "BAJAJ",
+                color: "#FB8C00",
+                products: [
+                    { lob: "Retail Motor", product: "4W", apiStatus: "Partial", ftStatus: "WIP", setup: "not-done", uatDate: "", remark: "Credentials received, waiting for portal setup", pm: "Rehan" },
+                    { lob: "Retail Motor", product: "2W", apiStatus: "Partial", ftStatus: "WIP", setup: "not-done", uatDate: "", remark: "Credentials received, waiting for portal setup", pm: "Rehan" }
+                ]
+            },
+            {
+                insurer: "NIA",
+                color: "#E53935",
+                products: [
+                    { lob: "Retail Motor", product: "4W", apiStatus: "Pending", ftStatus: "WIP", setup: "not-done", uatDate: "", remark: "KIT Pending", pm: "Rehan" },
+                    { lob: "Retail Motor", product: "2W", apiStatus: "Pending", ftStatus: "WIP", setup: "not-done", uatDate: "", remark: "KIT Pending", pm: "Rehan" }
+                ]
+            },
+            {
+                insurer: "RELIANCE",
+                color: "#3949AB",
+                products: [
+                    { lob: "Retail Motor", product: "4W", apiStatus: "Received", ftStatus: "WIP", setup: "not-done", uatDate: "", remark: "Credentials received, waiting for portal setup", pm: "Rehan" },
+                    { lob: "Retail Motor", product: "2W", apiStatus: "Received", ftStatus: "WIP", setup: "not-done", uatDate: "", remark: "Credentials received, waiting for portal setup", pm: "Rehan" }
+                ]
+            },
+            {
+                insurer: "TATA",
+                color: "#5D4037",
+                products: [
+                    { lob: "Retail Motor", product: "Motor 4 Wheeler", apiStatus: "Received", ftStatus: "WIP", setup: "not-done", uatDate: "", remark: "Kit has been received UAT credentials pending", pm: "Rehan" }
+                ]
+            },
+            {
+                insurer: "ROYAL SUNDARAM",
+                color: "#43A047",
+                products: [
+                    { lob: "Retail Motor", product: "Motor", apiStatus: "Partial", ftStatus: "WIP", setup: "not-done", uatDate: "", remark: "API KIT received needed API walkthrough", pm: "Rehan" }
+                ]
+            },
+            {
+                insurer: "ADITYA BIRLA",
+                color: "#1E88E5",
+                products: [
+                    { lob: "Retail Health", product: "Active One", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "", remark: "Testing is going on from Fyntune end", pm: "Yaseen" },
+                    { lob: "Retail Health", product: "Active Health", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "", remark: "Testing is going on from Fyntune end", pm: "Yaseen" }
+                ]
+            },
+            {
+                insurer: "NIVA BUPA",
+                color: "#8E24AA",
+                products: [
+                    { lob: "Retail Health", product: "Reassure 2.0", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "", remark: "Credentials received on 13 Jan", pm: "Yaseen" },
+                    { lob: "Retail Health", product: "Reassure 3.0", apiStatus: "Pending", ftStatus: "Pending", setup: "not-done", uatDate: "", remark: "We are Start integrating from 20/01/2025", pm: "Yaseen" }
+                ]
+            },
+            {
+                insurer: "BAJAJ ALLIANCE",
+                color: "#FB8C00",
+                products: [
+                    { lob: "Retail Health", product: "Family Health care", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "", remark: "Unable to submit proposal", pm: "Yaseen" },
+                    { lob: "Retail Health", product: "My health Care", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "", remark: "Testing is going on from Fyntune end", pm: "Yaseen" }
+                ]
+            },
+            {
+                insurer: "STAR",
+                color: "#00ACC1",
+                products: [
+                    { lob: "Retail Health", product: "Assured", apiStatus: "Received", ftStatus: "Completed", setup: "done", uatDate: "", remark: "Whitelisting is been done", pm: "Yaseen" }
+                ]
+            },
+            {
+                insurer: "AXIS MAX LIFE",
+                color: "#FF6B6B",
+                products: [
+                    { lob: "Endowment", product: "SWAG NON PAR", apiStatus: "Partial", ftStatus: "Pending", setup: "not-done", uatDate: "", remark: "Quote only", pm: "Sandeep" },
+                    { lob: "Endowment", product: "SVIBE", apiStatus: "Pending", ftStatus: "Pending", setup: "not-done", uatDate: "", remark: "", pm: "Sandeep" }
+                ]
+            },
+            {
+                insurer: "PNB MET LIFE",
+                color: "#4ECDC4",
+                products: [
+                    { lob: "Endowment", product: "Future Guaranteed Plan", apiStatus: "Pending", ftStatus: "Pending", setup: "not-done", uatDate: "", remark: "", pm: "Sandeep" },
+                    { lob: "Endowment", product: "MetLife Century Plan", apiStatus: "Pending", ftStatus: "Pending", setup: "not-done", uatDate: "", remark: "", pm: "Sandeep" }
+                ]
+            },
+            {
+                insurer: "BAJAJ LIFE",
+                color: "#95E1D3",
+                products: [
+                    { lob: "Endowment", product: "Goal Suraksha", apiStatus: "Partial", ftStatus: "Completed", setup: "done", uatDate: "2026-01-16", remark: "", pm: "Sandeep" }
+                ]
+            },
+            {
+                insurer: "HDFC",
+                color: "#F38181",
+                products: [
+                    { lob: "Endowment", product: "Various Plans", apiStatus: "Pending", ftStatus: "Pending", setup: "not-done", uatDate: "", remark: "No Kit Received till now", pm: "Sandeep" }
+                ]
+            }
+        ];
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderInsurerCards();
+            setupFilters();
+            setupPMFilter();
+            updateStats();
+        });
+
+        // Render all insurer cards
+        function renderInsurerCards(filteredData = insuranceData) {
+            const container = document.getElementById('insurer-cards');
+            container.innerHTML = '';
+            
+            if (filteredData.length === 0) {
+                container.innerHTML = `
+                <div class="no-results">
+                    <div>🔍</div>
+                    <h3>No Results Found</h3>
+                    <p>Try adjusting your filters to see more results</p>
+                </div>
+                `;
+                return;
+            }
+            
+            filteredData.forEach(insurer => {
+                const card = createInsurerCard(insurer);
+                container.innerHTML += card;
+            });
+        }
+
+        // Create HTML for an insurer card
+        function createInsurerCard(insurer) {
+            const productCount = insurer.products.length;
+            const completedCount = insurer.products.filter(p => p.ftStatus === "Completed").length;
+            const wipCount = insurer.products.filter(p => p.ftStatus === "WIP").length;
+            const pendingCount = insurer.products.filter(p => p.ftStatus === "Pending").length;
+            
+            let productsHTML = '';
+            insurer.products.forEach(product => {
+                const apiStatusClass = getApiStatusClass(product.apiStatus);
+                const ftStatusClass = getFtStatusClass(product.ftStatus);
+                const setupClass = product.setup === "done" ? "setup-done" : "setup-not-done";
+                const setupText = product.setup === "done" ? "Done" : "Not Done";
+                
+                // Format date if available
+                let dateDisplay = '';
+                if (product.uatDate) {
+                    const date = new Date(product.uatDate);
+                    const formattedDate = date.toLocaleDateString('en-GB', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric'
+                    });
+                    dateDisplay = `<div class="uat-date"><span class="date-icon">📅</span> UAT: ${formattedDate}</div>`;
+                }
+                
+                productsHTML += `
+                <div class="product-item" data-lob="${product.lob}" data-status="${product.ftStatus.toLowerCase()}" data-setup="${product.setup}" data-pm="${product.pm}">
+                    <div class="product-name">${product.product}</div>
+                    <div class="product-details">
+                        <span class="badge lob-badge">${product.lob}</span>
+                        <span class="status-badge ${ftStatusClass}">${product.ftStatus}</span>
+                        <span class="api-status">
+                            <span class="api-dot ${apiStatusClass}"></span>
+                            ${product.apiStatus}
+                        </span>
+                        <span class="setup-badge ${setupClass}">Setup: ${setupText}</span>
+                    </div>
+                    <div class="pm-info">
+                        PM: ${product.pm}
+                        <span class="pm-tag">${product.pm}</span>
+                    </div>
+                    ${dateDisplay}
+                    ${product.remark ? `<div class="remark">${product.remark}</div>` : ''}
+                </div>
+                `;
+            });
+            
+            return `
+            <div class="insurer-card" data-insurer="${insurer.insurer}">
+                <div class="insurer-header" style="background-color: ${insurer.color}">
+                    ${insurer.insurer}
+                    <div style="font-size: 13px; opacity: 0.9; margin-top: 5px; display: flex; gap: 8px; flex-wrap: wrap;">
+                        <span>${productCount} products</span>
+                        <span>•</span>
+                        <span>${completedCount} done</span>
+                        <span>•</span>
+                        <span>${wipCount} wip</span>
+                        <span>•</span>
+                        <span>${pendingCount} pending</span>
+                    </div>
+                </div>
+                <div class="insurer-content">
+                    ${productsHTML}
+                </div>
+            </div>
+            `;
+        }
+
+        // Get API status CSS class
+        function getApiStatusClass(status) {
+            switch(status) {
+                case 'Received': return 'api-received';
+                case 'Partial': return 'api-partial';
+                default: return 'api-pending';
+            }
+        }
+
+        // Get FT status CSS class
+        function getFtStatusClass(status) {
+            status = status.toLowerCase();
+            switch(status) {
+                case 'completed': return 'completed';
+                case 'wip': return 'wip';
+                default: return 'pending';
+            }
+        }
+
+        // Set up filter functionality
+        function setupFilters() {
+            const insurerFilter = document.getElementById('insurer-filter');
+            const lobFilter = document.getElementById('lob-filter');
+            const statusFilter = document.getElementById('status-filter');
+            const setupFilter = document.getElementById('setup-filter');
+            const resetButton = document.getElementById('reset-filters');
+            
+            insurerFilter.addEventListener('change', applyFilters);
+            lobFilter.addEventListener('change', applyFilters);
+            statusFilter.addEventListener('change', applyFilters);
+            setupFilter.addEventListener('change', applyFilters);
+            resetButton.addEventListener('click', resetFilters);
+            
+            // Add touch feedback
+            resetButton.addEventListener('touchstart', function() {
+                this.style.backgroundColor = '#e9ecef';
+            });
+            
+            resetButton.addEventListener('touchend', function() {
+                this.style.backgroundColor = '#f8f9fa';
+            });
+        }
+
+        // Set up PM filter buttons
+        function setupPMFilter() {
+            const pmButtons = document.querySelectorAll('.pm-filter-btn');
+            pmButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    pmButtons.forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Apply filters
+                    applyFilters();
+                });
+            });
+        }
+
+        // Apply all filters
+        function applyFilters() {
+            const selectedInsurer = document.getElementById('insurer-filter').value;
+            const selectedLOB = document.getElementById('lob-filter').value;
+            const selectedStatus = document.getElementById('status-filter').value;
+            const selectedSetup = document.getElementById('setup-filter').value;
+            
+            // Get selected PM
+            const selectedPM = document.querySelector('.pm-filter-btn.active').dataset.pm;
+            
+            let filteredData = insuranceData;
+            
+            // Filter by insurer
+            if (selectedInsurer !== 'all') {
+                filteredData = filteredData.filter(insurer => insurer.insurer === selectedInsurer);
+            }
+            
+            // Further filter products within each insurer
+            filteredData = filteredData.map(insurer => {
+                const filteredProducts = insurer.products.filter(product => {
+                    // LOB filter
+                    const lobMatch = selectedLOB === 'all' || product.lob === selectedLOB;
+                    
+                    // Status filter
+                    const statusMatch = selectedStatus === 'all' || 
+                        (selectedStatus === 'Completed' && product.ftStatus === 'Completed') ||
+                        (selectedStatus === 'WIP' && product.ftStatus === 'WIP') ||
+                        (selectedStatus === 'Pending' && product.ftStatus === 'Pending');
+                    
+                    // Setup filter
+                    const setupMatch = selectedSetup === 'all' || 
+                        (selectedSetup === 'done' && product.setup === 'done') ||
+                        (selectedSetup === 'not-done' && product.setup === 'not-done');
+                    
+                    // PM filter
+                    const pmMatch = selectedPM === 'all' || product.pm === selectedPM;
+                    
+                    return lobMatch && statusMatch && setupMatch && pmMatch;
+                });
+                
+                return {
+                    ...insurer,
+                    products: filteredProducts
+                };
+            }).filter(insurer => insurer.products.length > 0);
+            
+            renderInsurerCards(filteredData);
+            updateStats(filteredData);
+        }
+
+        // Reset all filters
+        function resetFilters() {
+            // Reset dropdowns
+            document.getElementById('insurer-filter').value = 'all';
+            document.getElementById('lob-filter').value = 'all';
+            document.getElementById('status-filter').value = 'all';
+            document.getElementById('setup-filter').value = 'all';
+            
+            // Reset PM filter buttons
+            const pmButtons = document.querySelectorAll('.pm-filter-btn');
+            pmButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.pm === 'all') {
+                    btn.classList.add('active');
+                }
+            });
+            
+            renderInsurerCards();
+            updateStats();
+        }
+
+        // Update statistics
+        function updateStats(filteredData = insuranceData) {
+            let totalProducts = 0;
+            let completedProducts = 0;
+            let wipProducts = 0;
+            let uniqueInsurers = new Set();
+            
+            filteredData.forEach(insurer => {
+                uniqueInsurers.add(insurer.insurer);
+                
+                insurer.products.forEach(product => {
+                    totalProducts++;
+                    if (product.ftStatus === 'Completed') completedProducts++;
+                    if (product.ftStatus === 'WIP') wipProducts++;
+                });
+            });
+            
+            document.getElementById('total-insurers').textContent = uniqueInsurers.size;
+            document.getElementById('total-products').textContent = totalProducts;
+            document.getElementById('completed-products').textContent = completedProducts;
+            document.getElementById('wip-products').textContent = wipProducts;
+        }
+    </script>
+</body>
+</html>
+
